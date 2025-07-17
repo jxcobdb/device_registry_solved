@@ -379,3 +379,108 @@ FOREIGN KEY ("user_id")
   [1m[36mActiveRecord::InternalMetadata Update (0.0ms)[0m  [1m[33mUPDATE "ar_internal_metadata" SET "value" = 'test', "updated_at" = '2025-07-17 18:19:21.482873' WHERE "ar_internal_metadata"."key" = 'environment'[0m
   [1m[36mActiveRecord::InternalMetadata Load (0.0ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "schema_sha1"]]
   [1m[36mActiveRecord::InternalMetadata Create (0.1ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ('schema_sha1', '8d7bfe3405bf459f926a9d832ca31e52e082417c', '2025-07-17 18:19:21.483493', '2025-07-17 18:19:21.483495') RETURNING "key"[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "environment"]]
+  [1m[36mActiveRecord::SchemaMigration Load (0.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.0ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "environment"]]
+  [1m[36mActiveRecord::SchemaMigration Load (0.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.0ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "environment"]]
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE IF EXISTS "api_keys"[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE TABLE "api_keys" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "bearer_id" integer NOT NULL, "bearer_type" varchar NOT NULL, "token" varchar NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_api_keys_on_bearer_id_and_bearer_type" ON "api_keys" ("bearer_id", "bearer_type")[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_api_keys_on_token" ON "api_keys" ("token")[0m
+  [1m[35m (0.0ms)[0m  [1m[35mDROP TABLE IF EXISTS "assignment_histories"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TABLE "assignment_histories" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "user_id" integer NOT NULL, "device_id" integer NOT NULL, "action" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "index_assignment_histories_on_device_id" ON "assignment_histories" ("device_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "index_assignment_histories_on_user_id" ON "assignment_histories" ("user_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[35mDROP TABLE IF EXISTS "devices"[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE TABLE "devices" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "serial_number" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, "user_id" integer)[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "index_devices_on_user_id" ON "devices" ("user_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[35mDROP TABLE IF EXISTS "users"[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE TABLE "users" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "email" varchar, "password_digest" varchar NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_users_on_email" ON "users" ("email")[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (15.7ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TEMPORARY TABLE "aassignment_histories" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "user_id" integer NOT NULL, "device_id" integer NOT NULL, "action" varchar DEFAULT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "tindex_aassignment_histories_on_user_id" ON "aassignment_histories" ("user_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "tindex_aassignment_histories_on_device_id" ON "aassignment_histories" ("device_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[32mINSERT INTO "aassignment_histories" ("id","user_id","device_id","action","created_at","updated_at")
+                     SELECT "id","user_id","device_id","action","created_at","updated_at" FROM "assignment_histories"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE "assignment_histories"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TABLE "assignment_histories" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "user_id" integer NOT NULL, "device_id" integer NOT NULL, "action" varchar DEFAULT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_f4e5350abe"
+FOREIGN KEY ("device_id")
+  REFERENCES "devices" ("id")
+)[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE INDEX "index_assignment_histories_on_device_id" ON "assignment_histories" ("device_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "index_assignment_histories_on_user_id" ON "assignment_histories" ("user_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[32mINSERT INTO "assignment_histories" ("id","user_id","device_id","action","created_at","updated_at")
+                     SELECT "id","user_id","device_id","action","created_at","updated_at" FROM "aassignment_histories"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE "aassignment_histories"[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.3ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE TEMPORARY TABLE "aassignment_histories" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "user_id" integer NOT NULL, "device_id" integer NOT NULL, "action" varchar DEFAULT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "tindex_aassignment_histories_on_user_id" ON "aassignment_histories" ("user_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "tindex_aassignment_histories_on_device_id" ON "aassignment_histories" ("device_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[32mINSERT INTO "aassignment_histories" ("id","user_id","device_id","action","created_at","updated_at")
+                     SELECT "id","user_id","device_id","action","created_at","updated_at" FROM "assignment_histories"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE "assignment_histories"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TABLE "assignment_histories" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "user_id" integer NOT NULL, "device_id" integer NOT NULL, "action" varchar DEFAULT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_f4e5350abe"
+FOREIGN KEY ("device_id")
+  REFERENCES "devices" ("id")
+, CONSTRAINT "fk_rails_a1082bc407"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+)[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "index_assignment_histories_on_device_id" ON "assignment_histories" ("device_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "index_assignment_histories_on_user_id" ON "assignment_histories" ("user_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[32mINSERT INTO "assignment_histories" ("id","user_id","device_id","action","created_at","updated_at")
+                     SELECT "id","user_id","device_id","action","created_at","updated_at" FROM "aassignment_histories"[0m
+  [1m[35m (0.0ms)[0m  [1m[35mDROP TABLE "aassignment_histories"[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.3ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TEMPORARY TABLE "adevices" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "serial_number" varchar DEFAULT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, "user_id" integer DEFAULT NULL)[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "tindex_adevices_on_user_id" ON "adevices" ("user_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[32mINSERT INTO "adevices" ("id","serial_number","created_at","updated_at","user_id")
+                     SELECT "id","serial_number","created_at","updated_at","user_id" FROM "devices"[0m
+  [1m[35m (0.0ms)[0m  [1m[35mDROP TABLE "devices"[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE TABLE "devices" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "serial_number" varchar DEFAULT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, "user_id" integer DEFAULT NULL, CONSTRAINT "fk_rails_410b63ef65"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+)[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "index_devices_on_user_id" ON "devices" ("user_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[32mINSERT INTO "devices" ("id","serial_number","created_at","updated_at","user_id")
+                     SELECT "id","serial_number","created_at","updated_at","user_id" FROM "adevices"[0m
+  [1m[35m (0.0ms)[0m  [1m[35mDROP TABLE "adevices"[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" varchar NOT NULL PRIMARY KEY)[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.0ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES (20250717181614)[0m
+  [1m[35m (0.0ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES
+(20250717175347),
+(20240731151913),
+(20240731145448),
+(20240731145352);[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" varchar NOT NULL PRIMARY KEY, "value" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.0ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "environment"]]
+  [1m[36mActiveRecord::InternalMetadata Create (0.0ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ('environment', 'development', '2025-07-17 19:52:10.207242', '2025-07-17 19:52:10.207244') RETURNING "key"[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.0ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "environment"]]
+  [1m[36mActiveRecord::InternalMetadata Update (0.0ms)[0m  [1m[33mUPDATE "ar_internal_metadata" SET "value" = 'test', "updated_at" = '2025-07-17 19:52:10.207891' WHERE "ar_internal_metadata"."key" = 'environment'[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.0ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "schema_sha1"]]
+  [1m[36mActiveRecord::InternalMetadata Create (0.0ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ('schema_sha1', '8d7bfe3405bf459f926a9d832ca31e52e082417c', '2025-07-17 19:52:10.208414', '2025-07-17 19:52:10.208415') RETURNING "key"[0m
