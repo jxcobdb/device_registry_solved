@@ -1,25 +1,46 @@
-# README
+# Device Registry Task
 
-Your task is to implement the part of the application that helps track devices assigned to users within an organization.
+A simple Rails API application for tracking devices assigned to users.
 
-For now, we have two ActiveRecord models: User and Device.
-User can have many devices; the device should be active only for one assigned user.
-There are 2 actions a User can take with the Device: assign the device to User or return the Device.
+## Features
+- Users can assign unassigned devices to themselves
+- Users can return devices (and cannot reassign the same device again)
+- Assignment history is tracked for all device-user actions
 
-Here are the product requirements:
-- User can assign the device only to themself. 
-- User can't assign the device already assigned to another user.
-- Only the user who assigned the device can return it. 
-- If the user returned the device in the past, they can't ever re-assign the same device to themself.
+## Requirements
+- Ruby 3.2.3
+- Rails >= 7.1.3.4
+- SQLite3
+
+## Setup
+
+1. Clone the repository
+2. Install dependencies:
+
+   bundle install
+
+3. Set up the database:
+
+        rails db:setup
+
+    for test DB
+
+        rails db:test:prepare
+
+4. Run the test suite:
+
+   bundle exec rspec
+
+## Product Rules
+- Users can only assign devices to themselves
+- Users cannot assign a device already assigned to another user
+- Only the user who assigned a device can return it
+- If a user returns a device, they cannot reassign it to themselves again
 
 
-TODO:
- - Clone this repo to your local machine - DON'T FORK IT.
- - Fix the config, so you can run the test suite properly.
- - Implement the code to make the tests pass for `AssignDeviceToUser` service.
- - Following the product requirements listed above, implement tests for returning the device and then implement the code to make them pass.
- - In case you are missing additional product requirements, use your best judgment. Have fun with it.
- - Refactor at will. Do you see something you don't like? Change it. It's your code. Remember to satisfy the outlined product requirements though.
- - Remember to document your progress using granular commits and meaningful commit messages.
- - Publish your code as a public repo using your Github account.
-# device_registry_solved
+## Development
+- Main logic is in `app/services/assign_device_to_user.rb` and `app/services/return_device_from_user.rb`
+- API endpoints are in `app/controllers/devices_controller.rb`
+- Assignment history is tracked in the `assignment_histories` table
+
+I did my best in those couple of days :D
