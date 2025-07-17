@@ -22,3 +22,4 @@ TODO:
  - Refactor at will. Do you see something you don't like? Change it. It's your code. Remember to satisfy the outlined product requirements though.
  - Remember to document your progress using granular commits and meaningful commit messages.
  - Publish your code as a public repo using your Github account.
+# device_registry_solved
