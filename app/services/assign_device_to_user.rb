@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 class AssignDeviceToUser
-  def initialize(user:, device:)
+  def initialize(requesting_user:, user:, device:)
+    @requesting_user = requesting_user
     @user = user
     @device = device
   end
@@ -9,6 +10,7 @@ class AssignDeviceToUser
   def call
     return failure("User does not exist") unless user.present?
     return failure("Device does not exist") unless device.present?
+    return failure("You are not allowed to assign device to another user") if requesting_user != user
     return failure("User already has this device") if user.devices.exists?(device.id)
     return failure("Device is already assigned to another user") if assigned_to_other_user?
     return failure("You have returned this device before and can't reassign it") if previously_returned?
@@ -23,7 +25,7 @@ class AssignDeviceToUser
 
   private
 
-  attr_reader :user, :device
+  attr_reader :user, :device, :requesting_user
 
   def assigned_to_other_user?
     device.user.present? && device.user != user
