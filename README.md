@@ -17,7 +17,7 @@ A simple Rails API application for tracking devices assigned to users.
 1. Clone the repository
 2. Install dependencies:
 
-   bundle install
+        bundle install
 
 3. Set up the database:
 
@@ -29,7 +29,7 @@ A simple Rails API application for tracking devices assigned to users.
 
 4. Run the test suite:
 
-   bundle exec rspec
+        bundle exec rspec
 
 ## Product Rules
 - Users can only assign devices to themselves
